@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><title>Mirai: The IoT Botnet &ndash; Sand Shark Security</title>
+<meta name="description" content="IT Profesional and Freelance Security Researcher">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://sandershark.github.io/css/palettes/base16-dark.css">
+<link rel="stylesheet" href="https://sandershark.github.io/css/risotto.css">
+<link rel="stylesheet" href="https://sandershark.github.io/css/custom.css">
+
+
+
+
+
+
+
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+      <li class="nomarker"><h1 class="page__logo"><a href="https://sandershark.github.io/" class="page__logo-inner">Sand Shark Security</a></h1></li>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://sandershark.github.io/posts/" title="">Posts</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1>Mirai: The IoT Botnet</h1>
+    </header>
+    <div class="content__body">
+        <h1 id="analyzing-mirai-a-deep-dive-into-a-persistent-threat">Analyzing Mirai: A Deep Dive into a Persistent Threat</h1>
+<p>In the realm of cybersecurity, few names evoke as much intrigue and concern as Mirai. For years, this resilient botnet has persisted, wreaking havoc across networks worldwide. Despite efforts to curb its influence, Mirai continues to evolve, perpetuating its status as the largest botnet in existence.</p>
+<h2 id="understanding-mirai-binaries">Understanding Mirai Binaries</h2>
+<p>Mirai manifests in various binary forms, each tailored to exploit specific vulnerabilities across different architectures. Some of the notable binaries associated with Mirai include:</p>
+<ul>
+<li><code>skid.mips</code></li>
+<li><code>skid.x86.elf</code></li>
+<li><code>skid.arm5</code></li>
+<li><code>skid.mpsl</code></li>
+<li><code>skid.arm</code></li>
+<li><code>skid.arm7</code></li>
+<li><code>skid.arm6</code></li>
+<li><code>faith.mips</code></li>
+<li><code>rebirth.x86</code></li>
+<li><code>IG.Sx86_64</code></li>
+<li><code>active.x86</code></li>
+<li><code>bot.x86_64</code></li>
+<li><code>FBI.x86_64</code></li>
+</ul>
+<h2 id="identification-of-mirai-actors">Identification of Mirai Actors</h2>
+<p>Among the myriad actors associated with Mirai, one notable entity is [AS151338] POLONETWORK-AS-AP, traced to the IP address 195.58.39.189 with the hostname &lsquo;rocock.gay&rsquo;.</p>
+<h2 id="analysis-of-x86-linux-commands">Analysis of &lsquo;x86&rsquo; Linux Commands</h2>
+<p>Upon scrutinizing one instance of Mirai, specifically the variant identified by the hash 10854ca81573b19d553b6c69ff95f73b, a series of &lsquo;x86&rsquo; Linux commands were observed:</p>
+<ul>
+<li><code>/bin/sh -c &quot;sudo chown user \&quot;/tmp/x86\.o\&quot;  &amp;&amp; chmod +x \&quot;/tmp/x86\.o\&quot; &amp;&amp; DISPLAY=:0 sudo -i \&quot;/tmp/x86\.o\&quot; &quot;</code></li>
+<li><code>sudo chown user /tmp/x86.o</code></li>
+<li><code>chown user /tmp/x86.o</code></li>
+<li><code>chmod +x /tmp/x86.o</code></li>
+<li><code>sudo -i /tmp/x86.o</code></li>
+<li><code>/tmp/x86.o</code></li>
+<li><code>/usr/bin/locale-check C.UTF-8</code></li>
+<li><code>-bash --login -c \/tmp\/x86\.o</code></li>
+<li><code>sh -c &quot;cat /usr/etc/debuginfod/*\.urls 2&gt;/dev/null&quot;</code></li>
+<li><code>cat /usr/etc/debuginfod/*.urls</code></li>
+<li><code>tr \n &quot; &quot;</code></li>
+<li><code>mesg n</code></li>
+<li><code>/tmp/x86.o</code></li>
+</ul>
+<h2 id="significance-of-analysis">Significance of Analysis</h2>
+<p>The significance of delving into Mirai&rsquo;s intricacies cannot be overstated. Understanding its propagation methods, payload delivery mechanisms, and evasion techniques is paramount in fortifying systems against its insidious attacks. By shedding light on the inner workings of Mirai, we empower defenders to stay one step ahead in the perpetual cat-and-mouse game of cybersecurity.</p>
+<h1 id="references">References</h1>
+<ul>
+<li><a href="https://www.joesandbox.com/analysis/841196/0/executive">Joe Sandbox Analysis</a></li>
+<li><a href="https://any.run/report/a939592b7c4b82eb07bf7ad619a3ce9606ebc119d3d7091b193b1a625684d77b/86ae468b-5f9d-428e-90dc-4bb76bf42c40">Any.Run Report</a></li>
+<li><a href="https://www.virustotal.com/gui/file/713ca6a961a02c78b95decc18a01c69606d112c77ffc9f8629eb03ac39e7a22b/detection/f-713ca6a">VirusTotal Analysis</a></li>
+<li><a href="https://www.greynoise.io/blog/cve-2024-3273-d-link-nas-rce-exploited-in-the-wild">GreyNoise Blog - CVE-2024-3273 D-Link NAS RCE Exploited in the Wild</a></li>
+</ul>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    <span class="about__logo" role="img">💾😶‍🌫️</span>&nbsp;
+    
+<h1 class="about__title">Sam Sandersona</h1>
+<p class="about__description">IT Profesional and Freelance Security Researcher</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/sandershark" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:sam@inert.me" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://www.linkedin.com/in/sam-sanderson/" rel="me" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+</div>
+                <hr>
+                <div class="aside__content">
+    
+    
+        <p>
+            
+            2024-04-17
+        </p>
+    
+
+    
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p class="copyright">©2024 Sam Sanderson</p>
+<p class="advertisement">Powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/joeroe/risotto">risotto</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>
