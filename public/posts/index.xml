@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Sand Shark Security</title>
-    <link>https://sandershark.github.io/posts/</link>
+    <link>https://inert.me/posts/</link>
     <description>Recent content in Posts on Sand Shark Security</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©2024 Sam Sanderson</copyright>
     <lastBuildDate>Wed, 17 Apr 2024 09:51:53 -0400</lastBuildDate>
-    <atom:link href="https://sandershark.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://inert.me/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mirai: The IoT Botnet</title>
-      <link>https://sandershark.github.io/posts/mirai/</link>
+      <link>https://inert.me/posts/mirai/</link>
       <pubDate>Wed, 17 Apr 2024 09:51:53 -0400</pubDate>
-      <guid>https://sandershark.github.io/posts/mirai/</guid>
+      <guid>https://inert.me/posts/mirai/</guid>
       <description>Analyzing Mirai: A Deep Dive into a Persistent Threat In the realm of cybersecurity, few names evoke as much intrigue and concern as Mirai. For years, this resilient botnet has persisted, wreaking havoc across networks worldwide. Despite efforts to curb its influence, Mirai continues to evolve, perpetuating its status as the largest botnet in existence.&#xA;Understanding Mirai Binaries Mirai manifests in various binary forms, each tailored to exploit specific vulnerabilities across different architectures.</description>
     </item>
     <item>
       <title>Mimu the lingering Cryptomalware</title>
-      <link>https://sandershark.github.io/posts/cryptomalware_dive/</link>
+      <link>https://inert.me/posts/cryptomalware_dive/</link>
       <pubDate>Tue, 02 Apr 2024 09:51:53 -0400</pubDate>
-      <guid>https://sandershark.github.io/posts/cryptomalware_dive/</guid>
+      <guid>https://inert.me/posts/cryptomalware_dive/</guid>
       <description>Resurgence/Lingering of &amp;lsquo;mimu&amp;rsquo; Cryptomalware&#xA;The recently disclosed Confluence vulnerability (CVE-2023-22527) has been actively exploited by threat actors deploying a long-standing cryptomalware strain known as &amp;ldquo;mimu.&amp;rdquo; This malware first emerged around 2019-2020 and has been continually repurposed to capitalize on new vulnerabilities, primarily targeting web servers via HTTP request bugs and remote code execution flaws.&#xA;The core functionality of mimu is straightforward yet insidious. It terminates competing processes and services to ensure unimpeded operation, then proceeds to consume system resources for cryptocurrency mining purposes, primarily targeting the CPU-intensive Monero cryptocurrency.</description>
     </item>
   </channel>
