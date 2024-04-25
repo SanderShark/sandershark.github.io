@@ -1,4 +1,4 @@
-baseURL = 'https://inert.me'
+baseURL = 'https://inert.me/'
 theme = 'risotto'
 title = 'Sand Shark Security'
 author = 'Sam Sanderson'

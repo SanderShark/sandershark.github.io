@@ -2,25 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-<<<<<<< HEAD
     <loc>https://inert.me/</loc>
     <lastmod>2024-04-25T09:51:53-04:00</lastmod>
   </url><url>
     <loc>https://inert.me/posts/</loc>
     <lastmod>2024-04-25T09:51:53-04:00</lastmod>
-=======
-    <loc>https://sandershark.github.io/</loc>
-    <lastmod>2024-04-17T09:51:53-04:00</lastmod>
-  </url><url>
-    <loc>https://sandershark.github.io/posts/mirai/</loc>
-    <lastmod>2024-04-17T09:51:53-04:00</lastmod>
-  </url><url>
-    <loc>https://sandershark.github.io/posts/</loc>
-    <lastmod>2024-04-17T09:51:53-04:00</lastmod>
-  </url><url>
-    <loc>https://sandershark.github.io/posts/cryptomalware_dive/</loc>
-    <lastmod>2024-04-02T09:51:53-04:00</lastmod>
->>>>>>> bbb961e978cbc6d966095bcf0fb1a75731cd07f9
   </url><url>
     <loc>https://inert.me/posts/mirai/</loc>
     <lastmod>2024-04-17T09:51:53-04:00</lastmod>
