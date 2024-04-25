@@ -1,3 +1,9 @@
+---
+title: "GPT Detection Tests"
+date: 2024-04-25T09:51:53-04:00
+draft: false
+---
+
 # Beat the detection, or maybe just detect better, you pick.
 So a friend of mine who takes college courses remotely came to me this week ranting about how his professor had run his written works through an AI detector, and it had come back as AI. I was not surprised by this entirely, he had mentioned he uses ChatGPT as a writing aid, and quite frankly, I am not sure that there is anything wrong with that. But it did spark my curiosity, I wanted to see if that article I'd read months back about how the detectors saw the constitution as generated was still the norm. Well, I got a bit more involved than that, full on let's beat the test style. Here is my research, I will include a GitHub repo with the data since there will be a lot of repetition here.
 
