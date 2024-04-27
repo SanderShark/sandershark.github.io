@@ -9,7 +9,7 @@ So a friend of mine who takes college courses remotely came to me this week rant
 
 
 ### Text to pull from for checks
-Tao of Pooh - Benjamin Hof/f: A1
+Tao of Pooh - Benjamin Hoff: A1
 ```
 Remember when Kanga and Roo came to the For-est? Immediately, Rabbit decided that he didn't like them, because they were Different. Then he began thinking of a way to make them leave. Fortunately for everyone, the plan failed, as Clever Plans do, sooner or later. Cleverness, after all, has its limitations. Its mechanical judgments and clever remarks tend to prove inaccurate with passing time, because it doesn't look very deeply into things to begin with. As in Rabbit's case, it has to change its opinions later on because of what it didn't see when it was forming them. The thing that makes someone truly different-unique, in fact-is something that Cleverness cannot really understand.
 ```
