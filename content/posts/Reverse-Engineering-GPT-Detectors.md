@@ -1,8 +1,8 @@
-+++
-title = 'GPT_Detection_Tests'
-date = 2024-04-25T06:56:46-04:00
-draft = false
-+++
+---
+title: "GPT Detection Tests"
+date: 2024-04-25T09:51:53-04:00
+draft: false
+---
 
 # Beat the detection, or maybe just detect better, you pick.
 So a friend of mine who takes college courses remotely came to me this week ranting about how his professor had run his written works through an AI detector, and it had come back as AI. I was not surprised by this entirely, he had mentioned he uses ChatGPT as a writing aid, and quite frankly, I am not sure that there is anything wrong with that. But it did spark my curiosity, I wanted to see if that article I'd read months back about how the detectors saw the constitution as generated was still the norm. Well, I got a bit more involved than that, full on let's beat the test style. Here is my research, I will include a GitHub repo with the data since there will be a lot of repetition here.
@@ -61,7 +61,68 @@ E2: 5% AI
 ```
 
 
-# Now for my next trick, just kidding, testing models now
+# Now for my next trick, just kidding, testing mode
+<thead>
+<tr>
+<th>Test</th>
+<th>A1</th>
+<th>A2</th>
+<th>E1</th>
+<th>E2</th>
+<th>R1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td>100%</td>
+<td>100%</td>
+<td>100%</td>
+<td>78%</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>0%</td>
+<td>0%</td>
+<td>0%</td>
+<td>0%</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>0%</td>
+<td>13%</td>
+<td>2%</td>
+<td>0%</td>
+<td>25%</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>100%</td>
+<td>100%</td>
+<td>100%</td>
+<td>100%</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>T5</td>
+<td>100%</td>
+<td>100%</td>
+<td>100%</td>
+<td>98%</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Well, that did not go quite as I expected. But largely, I am guessing these tests are trained off of ChatGPT outputs, which is where the results are mainly coming from.</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+ls now
 This will be done by generation model, so each table will be independent but contain the control data for reference. The nature of this test will ask the model only one thing. "Rewrite this text in your own words" and then the testing will be redone. Additionally, we will prompt the model to generate a paragraph of creative writing (R1) on its own using this prompt: "Write a single paragraph of creative text that attempts to prevent AI generation detection", why not, let's see if the models can beat the game.
 
 ## OpenAI ChatGPT 3.5:
@@ -69,13 +130,16 @@ This will be done by generation model, so each table will be independent but con
 ### Table:
 All % are amount AI
 
-| Test | A1   | A2   | E1   | E2   | R1   |
+{{<table "table table-striped table-bordered">}}
+| Test | A1 | A2 | E1 | E2 | R1 |
 | ---- | ---- | ---- | ---- | ---- | ---- |
-| T1   | 100% | 100% | 100% | 78%  | 100% |
-| T2   | 0%   | 0%   | 0%   | 0%   | 0%   |
-| T3   | 0%   | 13%  | 2%   | 0%   | 25%  |
-| T4   | 100% | 100% | 100% | 100% | 100% |
-| T5   | 100% | 100% | 100% | 98%  | 100% |
+| T1 | 100% | 100% | 100% | 78% | 100% |
+| T2 | 0% | 0% | 0% | 0% | 0% |
+| T3 | 0% | 13% | 2% | 0% | 25% |
+| T4 | 100% | 100% | 100% | 100% | 100% |
+| T5 | 100% | 100% | 100% | 98% | 100% |
+{{</table>}}
+
 Well, that did not go quite as I expected. But largely, I am guessing these tests are trained off of ChatGPT outputs, which is where the results are mainly coming from.
 
 ## Meta Llama3 8B
@@ -83,7 +147,7 @@ So, this test should come to be interesting since it's a more obscure model that
 
 
 ### Table
-
+{{<table "table table-striped table-bordered">}}
 | Test | A1   | A2   | E1     | E2     | R1     |
 | ---- | ---- | ---- | ------ | ------ | ------ |
 | T1   | 100% | 100% | 100%   | 100%   | 100%   |
@@ -91,6 +155,7 @@ So, this test should come to be interesting since it's a more obscure model that
 | T3   | 0%   | 6%   | 6%     | 12%    | 37%    |
 | T4   | 100% | 100% | 100%   | 100%   | 100%   |
 | T5   | 89%  | 100% | 100%   | 92%    | 100%   |
+{{</table>}}
 Well this did not go as I had expected. This model did not perform very well even against just standard GPT, so that's not good. It's likely the low parameters, and not that it's Meta at all.
 
 ## Google Gemeni Prod
@@ -98,6 +163,7 @@ I have no idea what to expect here since I do not functionally use this model re
 
 
 ### Table
+{{<table "table table-striped table-bordered">}}
 | Test | A1   | A2   | E1   | E2   | R1     |
 | ---- | ---- | ---- | ---- | ---- | ------ |
 | T1   | 35%  | 100% | 100% | 100% | 100%   |
@@ -105,14 +171,14 @@ I have no idea what to expect here since I do not functionally use this model re
 | T3   | 1%   | 11%% | 1%   | 23%  | 24%    |
 | T4   | 100% | 100% | 100% | 100% | 100%   |
 | T5   | 92%  | 97%  | 98%  | 100% | 100%   |
-
+{{</table>}}
 Well, I had higher hopes here, but I guess these tools are half-decent with low parameters. And hey the one I thought was broken flagged again, weird that it hardly works until it's generated organically.
 
 ## Microsoft Copilot
 This is allegedly just refactored ChatGPT4 with some system prompt changes. Let's see how it stacks up.
 
 ### Table
-
+{{<table "table table-striped table-bordered">}}
 | Test | A1   | A2   | E1   | E2  | R1   |
 | ---- | ---- | ---- | ---- | --- | ---- |
 | T1   | 66%  | 64%  | 100% | 2%  | 100% |
@@ -120,13 +186,14 @@ This is allegedly just refactored ChatGPT4 with some system prompt changes. Let'
 | T3   | 1%   | 5%   | 7%   | 9%  | 25%  |
 | T4   | 0%   | 81%  | 100% | 49% | 100% |
 | T5   | 100% | 100% | 100% | 82% | 99%  |
+{{</table>}}
 So that was quite interesting, this model seems to have in some ways performed the best yet. Although it was a bit comical in its answer to the pure generated prompt, it almost seems like it thought I wanted a story about generation and not to try to cheat the system.
 
 ## Claude Sonnet
 I am only going to use the Sonnet on Anthropic since I am not a subscriber, although I would suggest if you are looking to pay for AI usage this is where you go over OpenAI. These models are far superior, additionally, the UI is cleaner and the user experience is more intuitive than all other models I've used (I promise they don't give me kickbacks haha). To that notion, I have higher faith in this one going into it, but we will see.
 
 ### Table
-
+{{<table "table table-striped table-bordered">}}
 | Test | A1  | A2     | E1   | E2     | R1   |
 | ---- | --- | ------ | ---- | ------ | ---- |
 | T1   | 45% | 13%    | 100% | 46%    | 100% |
@@ -134,13 +201,14 @@ I am only going to use the Sonnet on Anthropic since I am not a subscriber, alth
 | T3   | 0%  | 1%     | 4%   | 0%     | 24%  |
 | T4   | 0%  | 0%     | 100% | 100%   | 100% |
 | T5   | 92% | 82%    | 100% | 82%    | 98%  |
+{{</table>}}
 Well overall, this was much better than everything thus far, although there were some weird anomalies which I am not sure why happened, like on the A2 test, out of nowhere the T2 test decided to work and do something weird. T2 seems to have acted weird overall with Claude, seems they may have done better capturing what it does in this test.
 
 ## CohereForAI/c4ai-command-r-plus
 So this is the first of the more 'obscure' models, or rather there probably just lesser known. This should result in better, since those tools are probably trained on data from the big dogs in the space.
 
 ### Table
-
+{{<table "table table-striped table-bordered">}}
 | Test | A1   | A2   | E1   | E2   | R1   |
 | ---- | ---- | ---- | ---- | ---- | ---- |
 | T1   | 42%  | 100% | 100% | 100% | 100% |
@@ -148,11 +216,13 @@ So this is the first of the more 'obscure' models, or rather there probably just
 | T3   | 0%   | 10%  | 11%  | 5%   | 38%  |
 | T4   | 58%  | 100% | 100% | 100% | 100% |
 | T5   | 100% | 100% | 100% | 98%  | 100% |
+{{</table>}}
 Well there goes my theory, this one performed very bad in comparison to some of the prior test. Let's keep looking for better ones. 
 
 ##  HuggingFaceH4/zephyr-orpo-141b-A35b-v0.1
 This is technically the largest model I have used yet, hard to say what that will do.
 ### Table
+{{<table "table table-striped table-bordered">}}
 | Test | A1   | A2     | E1   | E2   | R1   |
 | ---- | ---- | ------ | ---- | ---- | ---- |
 | T1   | 100% | 100%   | 100% | 35%  | 100% |
@@ -160,6 +230,7 @@ This is technically the largest model I have used yet, hard to say what that wil
 | T3   | 1%   | 15%    | 12%  | 0%   | 43%  |
 | T4   | 100% | 69&    | 100% | 100% | 100% |
 | T5   | 100% | 100%   | 100% | 78%  | 100% |
+{{</table>}}
 Not better or worse than the mean on this one. 
 
 ## mistralai/Mixtral-8x7B-Instruct-v0.1
@@ -167,6 +238,7 @@ This is not designed for chat but instead instruct, this might change the way it
 
 
 ### Table
+{{<table "table table-striped table-bordered">}}
 | Test | A1  | A2   | E1   | E2   | R1     |
 | ---- | --- | ---- | ---- | ---- | ------ |
 | T1   | 58% | 81%  | 100% | 78%  | 100%   |
@@ -174,13 +246,14 @@ This is not designed for chat but instead instruct, this might change the way it
 | T3   | 0%  | 0%   | 0%   | 0%   | 13%    |
 | T4   | 0%  | 77%  | 100% | 100% | 100%   |
 | T5   | 99% | 100% | 100% | 92%  | 100%   |
+{{</table>}}
 This was not as good as I'd hoped, seems this is getting harder, or they are learning from me.
 
 ## google/gemma-1.1-7b-it
 This is another instruction model created like Gemeni but open-source
 
 ### Table
-
+{{<table "table table-striped table-bordered">}}
 | Test | A1   | A2   | E1     | E2     | R1   |
 | ---- | ---- | ---- | ------ | ------ | ---- |
 | T1   | 100% | 100% | 100%   | 100%   | 100% |
@@ -188,6 +261,7 @@ This is another instruction model created like Gemeni but open-source
 | T3   | 3%   | 16%  | 19%    | 20%    | 31%  |
 | T4   | 0%   | 100% | 100%   | 100%   | 100% |
 | T5   | 100% | 100% | 100%   | 100%   | 100% |
+{{</table>}}
 So there is one thing I learned here. This model sucks at human-like written language. I think I am going to call it on exploring more, even if there are ones out there that might be better, it seems like the mainstream models might have the right thing going.
 
 # The end.... just kidding, let's figure out how to cheese these tools
@@ -196,6 +270,7 @@ So it seems like to me that one thing typically creates better results with a fe
 
 ### Table: Attempt#1
 
+{{<table "table table-striped table-bordered">}}
 | Test | A1  | A2    | E1    | E2  | R1   |
 | ---- | --- | ----- | ----- | --- | ---- |
 | T1   | 4%  | 0%    | 100%  | 6%  | 100% |
@@ -203,9 +278,11 @@ So it seems like to me that one thing typically creates better results with a fe
 | T3   | 0%  | 8%    | 3%    | 0%  | 38%  |
 | T4   | 0%  | 0%    | 100%  | 0%  | 100% |
 | T5   | 82% | 91%   | 100%  | 46% | 100% |
+{{</table>}}
 Okay, so this test gave me lots of info. It seems that two things became very apparently true. Fully generated text like in R1 is always going to fault given this method. As well as text that was genetically edited, and then regenerated to hide its generation will likely result in a fault as well. All that being said, my next test will just be using new organic written blobs to see if it will trigger anything.
 
 ### Table: Attempt#2
+{{<table "table table-striped table-bordered">}}
 | Test | C1  |
 | ---- | --- |
 | T1   | 23% |
@@ -213,7 +290,7 @@ Okay, so this test gave me lots of info. It seems that two things became very ap
 | T3   | 0%  |
 | T4   | 0%  |
 | T5   | 18% |
-
+{{</table>}}
 Well there we go, that's about as good as it's ever going to get. As far as I am concerned, at least. I do have to say that the last tool on my list, is an impressive piece of software. It has a superb method of checking, and my thoughts are that it's likely not just checking for repetitive phrases. My best guess is that it is using a model of its own to see if it resembles something else a human had written.
 
 ## Outcome
@@ -266,3 +343,4 @@ https://www.scribbr.com/ai-detector/ \
 
 Metaprompter:
 https://github.com/jthack/metaprompter
+

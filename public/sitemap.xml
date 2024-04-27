@@ -3,10 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-04-25T06:56:46-04:00</lastmod>
+    <lastmod>2024-04-25T09:51:53-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/reverse-engineering-gpt-detectors/</loc>
+    <lastmod>2024-04-25T09:51:53-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2024-04-25T06:56:46-04:00</lastmod>
+    <lastmod>2024-04-25T09:51:53-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/mirai/</loc>
     <lastmod>2024-04-17T09:51:53-04:00</lastmod>
