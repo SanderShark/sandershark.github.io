@@ -10,21 +10,21 @@
     <lastBuildDate>Thu, 25 Apr 2024 09:51:53 -0400</lastBuildDate>
     <atom:link href="https://inert.me/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>GPT Detection Tests</title>
+      <title>April 25, 2024 - GPT Detection Tests</title>
       <link>https://inert.me/posts/gpt_vs_detection/</link>
       <pubDate>Thu, 25 Apr 2024 09:51:53 -0400</pubDate>
       <guid>https://inert.me/posts/gpt_vs_detection/</guid>
       <description>Beat the detection, or maybe just detect better, you pick. So a friend of mine who takes college courses remotely came to me this week ranting about how his professor had run his written works through an AI detector, and it had come back as AI. I was not surprised by this entirely, he had mentioned he uses ChatGPT as a writing aid, and quite frankly, I am not sure that there is anything wrong with that.</description>
     </item>
     <item>
-      <title>Mirai: The IoT Botnet</title>
+      <title>April 4, 2024 - Mirai: The IoT Botnet</title>
       <link>https://inert.me/posts/mirai/</link>
       <pubDate>Wed, 17 Apr 2024 09:51:53 -0400</pubDate>
       <guid>https://inert.me/posts/mirai/</guid>
       <description>Analyzing Mirai: A Deep Dive into a Persistent Threat In the realm of cybersecurity, few names evoke as much intrigue and concern as Mirai. For years, this resilient botnet has persisted, wreaking havoc across networks worldwide. Despite efforts to curb its influence, Mirai continues to evolve, perpetuating its status as the largest botnet in existence.&#xA;Understanding Mirai Binaries Mirai manifests in various binary forms, each tailored to exploit specific vulnerabilities across different architectures.</description>
     </item>
     <item>
-      <title>Mimu the lingering Cryptomalware</title>
+      <title>April 2, 2024 - Mimu the lingering Cryptomalware</title>
       <link>https://inert.me/posts/cryptomalware_dive/</link>
       <pubDate>Tue, 02 Apr 2024 09:51:53 -0400</pubDate>
       <guid>https://inert.me/posts/cryptomalware_dive/</guid>
