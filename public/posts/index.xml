@@ -11,9 +11,9 @@
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>GPT Detection Tests</title>
-      <link>http://localhost:1313/posts/reverse-engineering-gpt-detectors/</link>
+      <link>http://localhost:1313/posts/gpt_vs_detection/</link>
       <pubDate>Thu, 25 Apr 2024 09:51:53 -0400</pubDate>
-      <guid>http://localhost:1313/posts/reverse-engineering-gpt-detectors/</guid>
+      <guid>http://localhost:1313/posts/gpt_vs_detection/</guid>
       <description>Beat the detection, or maybe just detect better, you pick. So a friend of mine who takes college courses remotely came to me this week ranting about how his professor had run his written works through an AI detector, and it had come back as AI. I was not surprised by this entirely, he had mentioned he uses ChatGPT as a writing aid, and quite frankly, I am not sure that there is anything wrong with that.</description>
     </item>
     <item>
