@@ -1,5 +1,5 @@
 ---
-title: "Mirai: The IoT Botnet"
+title: "April 4, 2024 - Mirai: The IoT Botnet"
 date: 2024-04-17T09:51:53-04:00
 draft: false
 ---

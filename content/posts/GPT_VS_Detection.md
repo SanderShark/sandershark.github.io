@@ -1,5 +1,5 @@
 ---
-title: "GPT Detection Tests"
+title: "April 25, 2024 - GPT Detection Tests"
 date: 2024-04-25T09:51:53-04:00
 draft: false
 ---
