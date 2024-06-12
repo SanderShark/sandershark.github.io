@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><title>Sand Shark Security</title>
+<meta name="description" content="Freelance Security Researcher and IT Profesional">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://sandershark.github.io/css/palettes/base16-dark.css">
+<link rel="stylesheet" href="https://sandershark.github.io/css/risotto.css">
+<link rel="stylesheet" href="https://sandershark.github.io/css/custom.css">
+
+
+
+
+
+
+
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+      <li class="nomarker"><h1 class="page__logo"><a href="https://sandershark.github.io/" class="page__logo-inner">Sand Shark Security</a></h1></li>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://sandershark.github.io/posts/" title="">Posts</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1></h1>
+    </header>
+    <div class="content__body">
+        <h1 id="attacking-54206178157-for-flagtxt-which-we-may-not-have-actually-found-yet">Attacking 54.206.178.157 for flag.txt, which we may not have actually found yet</h1>
+<h2 id="original-discovery">Original Discovery</h2>
+<p>I like to start out by just going head first in to browsing a web app like a normal user, play with all the functions, click all the links. Obviously we want to run this through a proxy (Burp, ZAP, and the software I use is called Caido). This got me pretty much nowhere, but I attempted a few basic logins like &lsquo;admin&rsquo; &lsquo;password&rsquo; and moved on from there. I had noticed some weird things in the JS that I think could use more inspection, spesifically: <code>serverFolder</code></p>
+<p>Another thing I do when manually browser is check and extension called Wappalyzer, it tells you what softwares a page is using and I will usually check vulnerabilities of those via google and like the results Snyk gives for this since they have version lists. This CTF uses SimpleHTTP a python module, potentially vulnerable to directory traversal, so I played around with that a bit but since I was just doing recon I didnt spend a ton of time on it since I didnt get anywhere with this vuln.</p>
+<p>Next thing I did was start a Nuclei scan on the original page I was given, here are the simple results:</p>
+<pre tabindex="0"><code>nuclei -u http://54.206.178.157:8085/
+
+                     __     _
+   ____  __  _______/ /__  (_)
+  / __ \/ / / / ___/ / _ \/ /
+ / / / / /_/ / /__/ /  __/ /
+/_/ /_/\__,_/\___/_/\___/_/   v3.2.8
+
+		projectdiscovery.io
+
+[WRN] Found 159 templates loaded with deprecated protocol syntax, update before v3 for continued support.
+[WRN] Found 4 templates with syntax error (use -validate flag for further examination)
+[INF] Current nuclei version: v3.2.8 (latest)
+[INF] Current nuclei-templates version: v9.8.9 (latest)
+[WRN] Scan results upload to cloud is disabled.
+[INF] New templates added in latest release: 1
+[INF] Templates loaded for current scan: 8262
+[WRN] Loading 155 unsigned templates for scan. Use with caution.
+[INF] Executing 8107 signed templates from projectdiscovery/nuclei-templates
+[INF] Targets loaded for current scan: 1
+[INF] Templates clustered: 1721 (Reduced 1627 Requests)
+[INF] Using Interactsh Server: oast.fun
+[ptr-fingerprint] [dns] [info] 157.178.206.54.in-addr.arpa [&#34;ec2-54-206-178-157.ap-southeast-2.compute.amazonaws.com.&#34;]
+[missing-csp] [http] [info] http://54.206.178.157:8085/
+[tech-detect:google-font-api] [http] [info] http://54.206.178.157:8085/
+[tech-detect:simplehttp] [http] [info] http://54.206.178.157:8085/
+[tech-detect:python] [http] [info] http://54.206.178.157:8085/
+[http-missing-security-headers:clear-site-data] [http] [info] http://54.206.178.157:8085/
+[http-missing-security-headers:cross-origin-embedder-policy] [http] [info] http://54.206.178.157:8085/
+[http-missing-security-headers:strict-transport-security] [http] [info] http://54.206.178.157:8085/
+[http-missing-security-headers:content-security-policy] [http] [info] http://54.206.178.157:8085/
+[http-missing-security-headers:x-frame-options] [http] [info] http://54.206.178.157:8085/
+[http-missing-security-headers:x-content-type-options] [http] [info] http://54.206.178.157:8085/
+[http-missing-security-headers:x-permitted-cross-domain-policies] [http] [info] http://54.206.178.157:8085/
+[http-missing-security-headers:referrer-policy] [http] [info] http://54.206.178.157:8085/
+[http-missing-security-headers:cross-origin-resource-policy] [http] [info] http://54.206.178.157:8085/
+[http-missing-security-headers:permissions-policy] [http] [info] http://54.206.178.157:8085/
+[http-missing-security-headers:cross-origin-opener-policy] [http] [info] http://54.206.178.157:8085/
+</code></pre><p>While that tells us a lot abut stuff on the page, not to much here is usefull for getting into the filesystem and largly informational.</p>
+<p>When I realized I wasn&rsquo;t getting very far with any of that, I tried SQLMap on the login with this command:</p>
+<pre tabindex="0"><code>sqlmap -u &#34;http://54.206.178.157:8085/classified.html&#34; --data &#34;username=admin&amp;password=testpassword&amp;remember=on&#34; --dbs
+</code></pre><p>This also came up with nothing and I moved on again.</p>
+<h2 id="deep-discovery">Deep Discovery</h2>
+<p>After having read that you all mentioned a few tools that they suggested use of, I tried an NMAP scan, I also ran a quick scan since that one was a scripted scan to enumerate a bunch of things. I used RustScan for the quick scan, here are the results:</p>
+<pre tabindex="0"><code>rustscan -a 54.206.178.157
+.----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
+| {}  }| { } |{ {__ {_   _}{ {__  /  ___} / {} \ |  `| |
+| .-. \| {_} |.-._} } | |  .-._} }\     }/  /\  \| |\  |
+`-&#39; `-&#39;`-----&#39;`----&#39;  `-&#39;  `----&#39;  `---&#39; `-&#39;  `-&#39;`-&#39; `-&#39;
+The Modern Day Port Scanner.
+________________________________________
+: http://discord.skerritt.blog         :
+: https://github.com/RustScan/RustScan :
+ --------------------------------------
+0day was here ♥
+
+[~] The config file is expected to be at &#34;/home/inspector/.rustscan.toml&#34;
+[!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers
+[!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;.
+Open 54.206.178.157:21
+Open 54.206.178.157:8083
+Open 54.206.178.157:8084
+[~] Starting Script(s)
+[~] Starting Nmap 7.95 ( https://nmap.org ) at 2024-06-12 02:45 EDT
+Initiating Ping Scan at 02:45
+Scanning 54.206.178.157 [2 ports]
+Completed Ping Scan at 02:45, 0.23s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 02:45
+Completed Parallel DNS resolution of 1 host. at 02:45, 0.11s elapsed
+DNS resolution of 1 IPs took 0.11s. Mode: Async [#: 1, OK: 1, NX: 0, DR: 0, SF: 0, TR: 1, CN: 0]
+Initiating Connect Scan at 02:45
+Scanning ec2-54-206-178-157.ap-southeast-2.compute.amazonaws.com (54.206.178.157) [3 ports]
+Discovered open port 8083/tcp on 54.206.178.157
+Discovered open port 8084/tcp on 54.206.178.157
+Discovered open port 21/tcp on 54.206.178.157
+Completed Connect Scan at 02:45, 2.41s elapsed (3 total ports)
+Nmap scan report for ec2-54-206-178-157.ap-southeast-2.compute.amazonaws.com (54.206.178.157)
+Host is up, received conn-refused (0.33s latency).
+Scanned at 2024-06-12 02:45:41 EDT for 3s
+
+PORT     STATE SERVICE REASON
+21/tcp   open  ftp     syn-ack
+8083/tcp open  us-srv  syn-ack
+8084/tcp open  websnp  syn-ack
+
+Read data files from: /usr/bin/../share/nmap
+Nmap done: 1 IP address (1 host up) scanned in 2.77 seconds
+</code></pre><p>Now these arent exaustive results, but I did see the other two 80XX ports, I navigated both of those in a browser. One page is practically a replica of the 8085 port, and the other is something a bit different. Both I didnt spend entirely too much time with since I was just looking around.</p>
+<p>Now, this script doest check the header of the FTP server, but it did tell me that it is there. That being said, the way I run my NMAP scan does pick this up without manual enumeration and ill show that below.</p>
+<p>A pretty typicall misconfiguration of FTP is annonymous login access of some of the file systems, sometimes with write privilage, in this case thats not true, but connection was the way to find out. Lucky for us, they had a flag in the response header and thats where I stopped for the night since I needed some sleep haha.</p>
+<p>here is the full NMAP scan, there is still tons of stuff in this i have not even looked at:</p>
+<pre tabindex="0"><code>nmap -sV -sC 54.206.178.157
+Starting Nmap 7.95 ( https://nmap.org ) at 2024-06-12 02:38 EDT
+Nmap scan report for ec2-54-206-178-157.ap-southeast-2.compute.amazonaws.com (54.206.178.157)
+Host is up (0.23s latency).
+Not shown: 986 filtered tcp ports (no-response)
+PORT     STATE  SERVICE          VERSION
+21/tcp   open   ftp?
+| fingerprint-strings:
+|   NULL:
+|_    220 Welcome to the ZZEN9212 FTP server. The flag is ZZEN9212{47d3b4764e8b8b8eeeacbb475d55a504}
+80/tcp   closed http
+443/tcp  closed https
+8080/tcp open   http-proxy       waitress
+|_http-title: Wednesday\xE2\x80\x99s Lolly Store - Home
+|_http-server-header: waitress
+| fingerprint-strings:
+|   GetRequest:
+|     HTTP/1.0 200 OK
+|     Connection: close
+|     Content-Length: 1417
+|     Content-Type: text/html; charset=utf-8
+|     Date: Wed, 12 Jun 2024 06:39:11 GMT
+|     Server: waitress
+|     &lt;!doctype html&gt;
+|     &lt;html&gt;
+|     &lt;head&gt;
+|     &lt;meta charset=&#34;utf-8&#34;&gt;
+|     &lt;title&gt;Wednesday
+|     Lolly Store - Home&lt;/title&gt;
+|     &lt;style&gt;
+|     body {
+|     margin-left: auto;
+|     margin-right: auto;
+|     width: 800px;
+|     font-family: &#34;Comic Sans MS&#34;, &#34;Comic Sans&#34;, cursive;
+|     .navigation {
+|     list-style-type: none;
+|     margin: 0;
+|     padding: 0;
+|     overflow: hidden;
+|     background-color: #F3070B;
+|     .navigationItem {
+|     float: left;
+|     .navigationItem a {
+|     display: block;
+|     color: white;
+|     text-align: center;
+|     padding: 14px 16px;
+|     text-decoration: none;
+|     .navigationItem a:hover {
+|     background-color: #111;
+|     &lt;/style&gt;
+|     &lt;/head&gt;
+|     &lt;body&gt;
+|     &lt;h1&gt;Wednesday
+|     Lolly Store&lt;/h1&gt;
+|     class=&#34;navigation&#34;&gt;
+|     class=&#34;navigationItem&#34;&gt;&lt;a h
+|   HTTPOptions:
+|     HTTP/1.0 200 OK
+|     Allow: GET, OPTIONS, HEAD
+|     Connection: close
+|     Content-Length: 0
+|     Content-Type: text/html; charset=utf-8
+|     Date: Wed, 12 Jun 2024 06:39:12 GMT
+|     Server: waitress
+|   RTSPRequest:
+|     HTTP/1.0 405 METHOD NOT ALLOWED
+|     Allow: GET, OPTIONS, HEAD
+|     Connection: close
+|     Content-Length: 153
+|     Content-Type: text/html; charset=utf-8
+|     Date: Wed, 12 Jun 2024 06:39:12 GMT
+|     Server: waitress
+|     &lt;!doctype html&gt;
+|     &lt;html lang=en&gt;
+|     &lt;title&gt;405 Method Not Allowed&lt;/title&gt;
+|     &lt;h1&gt;Method Not Allowed&lt;/h1&gt;
+|_    &lt;p&gt;The method is not allowed for the requested URL.&lt;/p&gt;
+8081/tcp open   blackice-icecap?
+| fingerprint-strings:
+|   FourOhFourRequest:
+|     HTTP/1.0 404 NOT FOUND
+|     Connection: close
+|     Content-Length: 207
+|     Content-Type: text/html; charset=utf-8
+|     Date: Wed, 12 Jun 2024 06:39:12 GMT
+|     Server: waitress
+|     &lt;!doctype html&gt;
+|     &lt;html lang=en&gt;
+|     &lt;title&gt;404 Not Found&lt;/title&gt;
+|     &lt;h1&gt;Not Found&lt;/h1&gt;
+|     &lt;p&gt;The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.&lt;/p&gt;
+|   GetRequest:
+|     HTTP/1.0 200 OK
+|     Connection: close
+|     Content-Length: 2124
+|     Content-Type: text/html; charset=utf-8
+|     Date: Wed, 12 Jun 2024 06:39:11 GMT
+|     Server: waitress
+|     &lt;!doctype html&gt;
+|     &lt;html&gt;
+|     &lt;head&gt;
+|     &lt;meta charset=&#34;utf-8&#34;&gt;
+|     &lt;title&gt;PaaS Runner&lt;/title&gt;
+|     &lt;style&gt;
+|     body {
+|     margin-left: auto;
+|     margin-right: auto;
+|     width: 800px;
+|     font-family: &#34;Comic Sans MS&#34;, &#34;Comic Sans&#34;, cursive;
+|     .navigation {
+|     list-style-type: none;
+|     margin: 0;
+|     padding: 0;
+|     overflow: hidden;
+|     background-color: #3755e3;
+|     .navigationItem {
+|     float: left;
+|     .navigationItem a {
+|     display: block;
+|     color: white;
+|     text-align: center;
+|     padding: 14px 16px;
+|     text-decoration: none;
+|     .navigationItem a:hover {
+|     background-color: #111;
+|     .codeoutput {
+|     background-color: #e1dede;
+|     .flag {
+|     background-color: #eaa981;
+|   SIPOptions:
+|     HTTP/1.0 405 METHOD NOT ALLOWED
+|     Allow: HEAD, POST, OPTIONS, GET
+|     Connection: close
+|     Content-Length: 153
+|     Content-Type: text/html; charset=utf-8
+|     Date: Wed, 12 Jun 2024 06:39:12 GMT
+|     Server: waitress
+|     &lt;!doctype html&gt;
+|     &lt;html lang=en&gt;
+|     &lt;title&gt;405 Method Not Allowed&lt;/title&gt;
+|     &lt;h1&gt;Method Not Allowed&lt;/h1&gt;
+|_    &lt;p&gt;The method is not allowed for the requested URL.&lt;/p&gt;
+8082/tcp open   blackice-alerts?
+| fingerprint-strings:
+|   FourOhFourRequest, GetRequest:
+|     Welcome to my adventure game! Help me escape the jail and get the treasure! Type &#39;help&#39; to get started!
+|     #####
+|     #####
+|     #####
+|     #####
+|   GenericLines, NULL:
+|     Welcome to my adventure game! Help me escape the jail and get the treasure! Type &#39;help&#39; to get started!
+|     #####
+|_    #####
+8083/tcp open   us-srv?
+| fingerprint-strings:
+|   FourOhFourRequest:
+|     HTTP/1.0 404 NOT FOUND
+|     Connection: close
+|     Content-Length: 207
+|     Content-Type: text/html; charset=utf-8
+|     Date: Wed, 12 Jun 2024 06:39:12 GMT
+|     Server: waitress
+|     &lt;!doctype html&gt;
+|     &lt;html lang=en&gt;
+|     &lt;title&gt;404 Not Found&lt;/title&gt;
+|     &lt;h1&gt;Not Found&lt;/h1&gt;
+|     &lt;p&gt;The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.&lt;/p&gt;
+|   GetRequest:
+|     HTTP/1.0 200 OK
+|     Connection: close
+|     Content-Length: 1441
+|     Content-Type: text/html; charset=utf-8
+|     Date: Wed, 12 Jun 2024 06:39:11 GMT
+|     Server: waitress
+|     &lt;!doctype html&gt;
+|     &lt;html&gt;
+|     &lt;head&gt;
+|     &lt;meta charset=&#34;utf-8&#34;&gt;
+|     &lt;title&gt;Safety Filter 1001&lt;/title&gt;
+|     &lt;style&gt;
+|     body {
+|     margin-left: auto;
+|     margin-right: auto;
+|     width: 800px;
+|     font-family: &#34;Comic Sans MS&#34;, &#34;Comic Sans&#34;, cursive;
+|     .navigation {
+|     list-style-type: none;
+|     margin: 0;
+|     padding: 0;
+|     overflow: hidden;
+|     background-color: #3755e3;
+|     .navigationItem {
+|     float: left;
+|     .navigationItem a {
+|     display: block;
+|     color: white;
+|     text-align: center;
+|     padding: 14px 16px;
+|     text-decoration: none;
+|     .navigationItem a:hover {
+|     background-color: #111;
+|     .codeoutput {
+|     background-color: #e1dede;
+|     .flag {
+|     background-color: #eaa981;
+|   HTTPOptions:
+|     HTTP/1.0 200 OK
+|     Allow: POST, OPTIONS, GET, HEAD
+|     Connection: close
+|     Content-Length: 0
+|     Content-Type: text/html; charset=utf-8
+|     Date: Wed, 12 Jun 2024 06:39:18 GMT
+|_    Server: waitress
+8084/tcp open   websnp?
+| fingerprint-strings:
+|   FourOhFourRequest:
+|     HTTP/1.0 404 NOT FOUND
+|     Connection: close
+|     Content-Length: 207
+|     Content-Type: text/html; charset=utf-8
+|     Date: Wed, 12 Jun 2024 06:39:12 GMT
+|     Server: waitress
+|     &lt;!doctype html&gt;
+|     &lt;html lang=en&gt;
+|     &lt;title&gt;404 Not Found&lt;/title&gt;
+|     &lt;h1&gt;Not Found&lt;/h1&gt;
+|     &lt;p&gt;The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.&lt;/p&gt;
+|   GetRequest:
+|     HTTP/1.0 200 OK
+|     Connection: close
+|     Content-Length: 4722
+|     Content-Type: text/html; charset=utf-8
+|     Date: Wed, 12 Jun 2024 06:39:11 GMT
+|     Server: waitress
+|     &lt;!DOCTYPE html&gt;
+|     &lt;html xmlns=&#34;http://www.w3.org/1999/xhtml&#34;&gt;
+|     &lt;head&gt;
+|     &lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=utf-8&#34; /&gt;
+|     &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no&#34; /&gt;
+|     &lt;title&gt;The Archive&lt;/title&gt;
+|     &lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;
+|     &lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;
+|     &lt;link href=&#34;https://fonts.googleapis.com/css2?family=Noto+Serif&amp;family=Playfair+Display&amp;display=swap&#34; rel=&#34;stylesheet&#34;&gt;
+|     &lt;script src=&#34;https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js&#34;&gt;&lt;/script&gt;
+|     &lt;/head&gt;
+|     &lt;body&gt;
+|     &lt;section class=&#34;wrapper&#34;&gt;
+|     &lt;div class=&#34;activity parallax&#34;&gt;
+|_    &lt;div class=&#34;content&#34;&gt;
+8085/tcp open   http             Karrigell Python httpd (SimpleHTTP 0.6; Python 3.9.11)
+|_http-title: The Archive
+|_http-server-header: SimpleHTTP/0.6 Python/3.9.11
+8086/tcp closed d-s-n
+8087/tcp closed simplifymedia
+8088/tcp closed radan-http
+8089/tcp closed unknown
+8090/tcp closed opsmessaging
+6 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port21-TCP:V=7.95%I=7%D=6/12%Time=6669428A%P=x86_64-pc-linux-gnu%r(NULL
+SF:,60,&#34;220\x20Welcome\x20to\x20the\x20ZZEN9212\x20FTP\x20server\.\x20The\
+SF:x20flag\x20is\x20ZZEN9212{47d3b4764e8b8b8eeeacbb475d55a504}\r\n&#34;);
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port8080-TCP:V=7.95%I=7%D=6/12%Time=6669428F%P=x86_64-pc-linux-gnu%r(Ge
+SF:tRequest,624,&#34;HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nContent
+SF:-Length:\x201417\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nDat
+SF:e:\x20Wed,\x2012\x20Jun\x202024\x2006:39:11\x20GMT\r\nServer:\x20waitre
+SF:ss\r\n\r\n&lt;!doctype\x20html&gt;\n&lt;html&gt;\n&lt;head&gt;\n\t&lt;meta\x20charset=\&#34;utf-
+SF:8\&#34;&gt;\n\t&lt;title&gt;Wednesday\xe2\x80\x99s\x20Lolly\x20Store\x20-\x20Home&lt;/t
+SF:itle&gt;\n\t&lt;style&gt;\n\t\tbody\x20{\n\t\t\tmargin-left:\x20auto;\n\x20\x20\
+SF:x20\x20\t\tmargin-right:\x20auto;\n\x20\x20\x20\x20\t\twidth:\x20800px;
+SF:\n\t\t\tfont-family:\x20\&#34;Comic\x20Sans\x20MS\&#34;,\x20\&#34;Comic\x20Sans\&#34;,\
+SF:x20cursive;\n\t\t}\n\n\t\t\.navigation\x20{\n\t\t\x20\x20list-style-typ
+SF:e:\x20none;\n\t\t\x20\x20margin:\x200;\n\t\t\x20\x20padding:\x200;\n\t\
+SF:t\x20\x20overflow:\x20hidden;\n\t\t\x20\x20background-color:\x20#F3070B
+SF:;\n\t\t}\n\n\t\t\.navigationItem\x20{\n\t\t\x20\x20float:\x20left;\n\t\
+SF:t}\n\n\t\t\.navigationItem\x20a\x20{\n\t\t\x20\x20display:\x20block;\n\
+SF:t\t\x20\x20color:\x20white;\n\t\t\x20\x20text-align:\x20center;\n\t\t\x
+SF:20\x20padding:\x2014px\x2016px;\n\t\t\x20\x20text-decoration:\x20none;\
+SF:n\t\t}\n\n\t\t\.navigationItem\x20a:hover\x20{\n\t\t\x20\x20background-
+SF:color:\x20#111;\n\t\t}\n\t&lt;/style&gt;\n&lt;/head&gt;\n\n&lt;body&gt;\n\n\t&lt;h1&gt;Wednesda
+SF:y\xe2\x80\x99s\x20Lolly\x20Store&lt;/h1&gt;\n\t&lt;ul\x20class=\&#34;navigation\&#34;&gt;\n
+SF:\t\t&lt;li\x20class=\&#34;navigationItem\&#34;&gt;&lt;a\x20h&#34;)%r(HTTPOptions,B3,&#34;HTTP/1\
+SF:.0\x20200\x20OK\r\nAllow:\x20GET,\x20OPTIONS,\x20HEAD\r\nConnection:\x2
+SF:0close\r\nContent-Length:\x200\r\nContent-Type:\x20text/html;\x20charse
+SF:t=utf-8\r\nDate:\x20Wed,\x2012\x20Jun\x202024\x2006:39:12\x20GMT\r\nSer
+SF:ver:\x20waitress\r\n\r\n&#34;)%r(RTSPRequest,15E,&#34;HTTP/1\.0\x20405\x20METHO
+SF:D\x20NOT\x20ALLOWED\r\nAllow:\x20GET,\x20OPTIONS,\x20HEAD\r\nConnection
+SF::\x20close\r\nContent-Length:\x20153\r\nContent-Type:\x20text/html;\x20
+SF:charset=utf-8\r\nDate:\x20Wed,\x2012\x20Jun\x202024\x2006:39:12\x20GMT\
+SF:r\nServer:\x20waitress\r\n\r\n&lt;!doctype\x20html&gt;\n&lt;html\x20lang=en&gt;\n&lt;t
+SF:itle&gt;405\x20Method\x20Not\x20Allowed&lt;/title&gt;\n&lt;h1&gt;Method\x20Not\x20Allo
+SF:wed&lt;/h1&gt;\n&lt;p&gt;The\x20method\x20is\x20not\x20allowed\x20for\x20the\x20req
+SF:uested\x20URL\.&lt;/p&gt;\n&#34;);
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port8081-TCP:V=7.95%I=7%D=6/12%Time=6669428F%P=x86_64-pc-linux-gnu%r(Ge
+SF:tRequest,8E7,&#34;HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nContent
+SF:-Length:\x202124\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nDat
+SF:e:\x20Wed,\x2012\x20Jun\x202024\x2006:39:11\x20GMT\r\nServer:\x20waitre
+SF:ss\r\n\r\n&lt;!doctype\x20html&gt;\n&lt;html&gt;\n&lt;head&gt;\n\t&lt;meta\x20charset=\&#34;utf-
+SF:8\&#34;&gt;\n\t&lt;title&gt;PaaS\x20Runner&lt;/title&gt;\n\t&lt;style&gt;\n\t\tbody\x20{\n\t\t\t
+SF:margin-left:\x20auto;\n\x20\x20\x20\x20\t\tmargin-right:\x20auto;\n\x20
+SF:\x20\x20\x20\t\twidth:\x20800px;\n\t\t\tfont-family:\x20\&#34;Comic\x20Sans
+SF:\x20MS\&#34;,\x20\&#34;Comic\x20Sans\&#34;,\x20cursive;\n\t\t}\n\n\t\t\.navigation\
+SF:x20{\n\t\t\x20\x20list-style-type:\x20none;\n\t\t\x20\x20margin:\x200;\
+SF:n\t\t\x20\x20padding:\x200;\n\t\t\x20\x20overflow:\x20hidden;\n\t\t\x20
+SF:\x20background-color:\x20#3755e3;\n\t\t}\n\n\t\t\.navigationItem\x20{\n
+SF:\t\t\x20\x20float:\x20left;\n\t\t}\n\n\t\t\.navigationItem\x20a\x20{\n\
+SF:t\t\x20\x20display:\x20block;\n\t\t\x20\x20color:\x20white;\n\t\t\x20\x
+SF:20text-align:\x20center;\n\t\t\x20\x20padding:\x2014px\x2016px;\n\t\t\x
+SF:20\x20text-decoration:\x20none;\n\t\t}\n\n\t\t\.navigationItem\x20a:hov
+SF:er\x20{\n\t\t\x20\x20background-color:\x20#111;\n\t\t}\n\n\x20\x20\x20\
+SF:x20\x20\x20\x20\x20\.codeoutput\x20{\n\x20\x20\x20\x20\x20\x20\x20\x20\
+SF:x20\x20\x20\x20background-color:\x20#e1dede;\n\x20\x20\x20\x20\x20\x20\
+SF:x20\x20}\n\n\x20\x20\x20\x20\x20\x20\x20\x20\.flag\x20{\n\x20\x20\x20\x
+SF:20\x20\x20\x20\x20\x20\x20\x20\x20background-color:\x20#eaa981;\n\x20\x
+SF:20\x20\x20\x20\x20\x20\x20}\n\t&lt;/s&#34;)%r(FourOhFourRequest,170,&#34;HTTP/1\.0
+SF:\x20404\x20NOT\x20FOUND\r\nConnection:\x20close\r\nContent-Length:\x202
+SF:07\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nDate:\x20Wed,\x20
+SF:12\x20Jun\x202024\x2006:39:12\x20GMT\r\nServer:\x20waitress\r\n\r\n&lt;!do
+SF:ctype\x20html&gt;\n&lt;html\x20lang=en&gt;\n&lt;title&gt;404\x20Not\x20Found&lt;/title&gt;\n
+SF:&lt;h1&gt;Not\x20Found&lt;/h1&gt;\n&lt;p&gt;The\x20requested\x20URL\x20was\x20not\x20foun
+SF:d\x20on\x20the\x20server\.\x20If\x20you\x20entered\x20the\x20URL\x20man
+SF:ually\x20please\x20check\x20your\x20spelling\x20and\x20try\x20again\.&lt;/
+SF:p&gt;\n&#34;)%r(SIPOptions,164,&#34;HTTP/1\.0\x20405\x20METHOD\x20NOT\x20ALLOWED\r
+SF:\nAllow:\x20HEAD,\x20POST,\x20OPTIONS,\x20GET\r\nConnection:\x20close\r
+SF:\nContent-Length:\x20153\r\nContent-Type:\x20text/html;\x20charset=utf-
+SF:8\r\nDate:\x20Wed,\x2012\x20Jun\x202024\x2006:39:12\x20GMT\r\nServer:\x
+SF:20waitress\r\n\r\n&lt;!doctype\x20html&gt;\n&lt;html\x20lang=en&gt;\n&lt;title&gt;405\x20
+SF:Method\x20Not\x20Allowed&lt;/title&gt;\n&lt;h1&gt;Method\x20Not\x20Allowed&lt;/h1&gt;\n&lt;p
+SF:&gt;The\x20method\x20is\x20not\x20allowed\x20for\x20the\x20requested\x20UR
+SF:L\.&lt;/p&gt;\n&#34;);
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port8082-TCP:V=7.95%I=7%D=6/12%Time=6669428F%P=x86_64-pc-linux-gnu%r(NU
+SF:LL,B4,&#34;Welcome\x20to\x20my\x20adventure\x20game!\x20Help\x20me\x20escap
+SF:e\x20the\x20jail\x20and\x20get\x20the\x20treasure!\x20Type\x20&#39;help&#39;\x2
+SF:0to\x20get\x20started!\n\n\x20\x20\x20\x20\x20\x20\x20\x20\n\x20#####\x
+SF:20\x20\n\x20#!\x20\x20#\x20\x20\n\x20#\x20\x20\x20#\x20\x20\n\x20#\x20\
+SF:x20\x20#\x20@\n\x20#\x20\x20\x20#\x20\x20\n\x20#####\x20\x20\n\x20\x20\
+SF:x20\x20\x20\x20\x20\x20\n\x20&gt;\x20&#34;)%r(GetRequest,FF,&#34;Welcome\x20to\x20
+SF:my\x20adventure\x20game!\x20Help\x20me\x20escape\x20the\x20jail\x20and\
+SF:x20get\x20the\x20treasure!\x20Type\x20&#39;help&#39;\x20to\x20get\x20started!\n
+SF:\n\x20\x20\x20\x20\x20\x20\x20\x20\n\x20#####\x20\x20\n\x20#!\x20\x20#\
+SF:x20\x20\n\x20#\x20\x20\x20#\x20\x20\n\x20#\x20\x20\x20#\x20@\n\x20#\x20
+SF:\x20\x20#\x20\x20\n\x20#####\x20\x20\n\x20\x20\x20\x20\x20\x20\x20\x20\
+SF:n\x20&gt;\x20\x20\x20\x20\x20\x20\x20\x20\x20\n\x20#####\x20\x20\n\x20#!\x
+SF:20\x20#\x20\x20\n\x20#\x20\x20\x20#\x20\x20\n\x20#\x20\x20\x20#\x20@\n\
+SF:x20#\x20\x20\x20#\x20\x20\n\x20#####\x20\x20\n\x20\x20\x20\x20\x20\x20\
+SF:x20\x20\n\x20&gt;\x20&#34;)%r(FourOhFourRequest,FF,&#34;Welcome\x20to\x20my\x20adv
+SF:enture\x20game!\x20Help\x20me\x20escape\x20the\x20jail\x20and\x20get\x2
+SF:0the\x20treasure!\x20Type\x20&#39;help&#39;\x20to\x20get\x20started!\n\n\x20\x2
+SF:0\x20\x20\x20\x20\x20\x20\n\x20#####\x20\x20\n\x20#\x20\x20\x20#\x20\x2
+SF:0\n\x20#!\x20\x20#\x20\x20\n\x20#\x20\x20\x20#\x20@\n\x20#\x20\x20\x20#
+SF:\x20\x20\n\x20#####\x20\x20\n\x20\x20\x20\x20\x20\x20\x20\x20\n\x20&gt;\x2
+SF:0\x20\x20\x20\x20\x20\x20\x20\x20\n\x20#####\x20\x20\n\x20#\x20\x20\x20
+SF:#\x20\x20\n\x20#!\x20\x20#\x20\x20\n\x20#\x20\x20\x20#\x20@\n\x20#\x20\
+SF:x20\x20#\x20\x20\n\x20#####\x20\x20\n\x20\x20\x20\x20\x20\x20\x20\x20\n
+SF:\x20&gt;\x20&#34;)%r(GenericLines,B4,&#34;Welcome\x20to\x20my\x20adventure\x20game
+SF:!\x20Help\x20me\x20escape\x20the\x20jail\x20and\x20get\x20the\x20treasu
+SF:re!\x20Type\x20&#39;help&#39;\x20to\x20get\x20started!\n\n\x20\x20\x20\x20\x20\
+SF:x20\x20\x20\n\x20#####\x20\x20\n\x20#\x20\x20\x20#\x20\x20\n\x20#!\x20\
+SF:x20#\x20\x20\n\x20#\x20\x20\x20#\x20@\n\x20#\x20\x20\x20#\x20\x20\n\x20
+SF:#####\x20\x20\n\x20\x20\x20\x20\x20\x20\x20\x20\n\x20&gt;\x20&#34;);
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port8083-TCP:V=7.95%I=7%D=6/12%Time=6669428F%P=x86_64-pc-linux-gnu%r(Ge
+SF:tRequest,63C,&#34;HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nContent
+SF:-Length:\x201441\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nDat
+SF:e:\x20Wed,\x2012\x20Jun\x202024\x2006:39:11\x20GMT\r\nServer:\x20waitre
+SF:ss\r\n\r\n&lt;!doctype\x20html&gt;\n&lt;html&gt;\n&lt;head&gt;\n\t&lt;meta\x20charset=\&#34;utf-
+SF:8\&#34;&gt;\n\t&lt;title&gt;Safety\x20Filter\x201001&lt;/title&gt;\n\t&lt;style&gt;\n\t\tbody\x2
+SF:0{\n\t\t\tmargin-left:\x20auto;\n\x20\x20\x20\x20\t\tmargin-right:\x20a
+SF:uto;\n\x20\x20\x20\x20\t\twidth:\x20800px;\n\t\t\tfont-family:\x20\&#34;Com
+SF:ic\x20Sans\x20MS\&#34;,\x20\&#34;Comic\x20Sans\&#34;,\x20cursive;\n\t\t}\n\n\t\t\.n
+SF:avigation\x20{\n\t\t\x20\x20list-style-type:\x20none;\n\t\t\x20\x20marg
+SF:in:\x200;\n\t\t\x20\x20padding:\x200;\n\t\t\x20\x20overflow:\x20hidden;
+SF:\n\t\t\x20\x20background-color:\x20#3755e3;\n\t\t}\n\n\t\t\.navigationI
+SF:tem\x20{\n\t\t\x20\x20float:\x20left;\n\t\t}\n\n\t\t\.navigationItem\x2
+SF:0a\x20{\n\t\t\x20\x20display:\x20block;\n\t\t\x20\x20color:\x20white;\n
+SF:\t\t\x20\x20text-align:\x20center;\n\t\t\x20\x20padding:\x2014px\x2016p
+SF:x;\n\t\t\x20\x20text-decoration:\x20none;\n\t\t}\n\n\t\t\.navigationIte
+SF:m\x20a:hover\x20{\n\t\t\x20\x20background-color:\x20#111;\n\t\t}\n\n\x2
+SF:0\x20\x20\x20\x20\x20\x20\x20\.codeoutput\x20{\n\x20\x20\x20\x20\x20\x2
+SF:0\x20\x20\x20\x20\x20\x20background-color:\x20#e1dede;\n\x20\x20\x20\x2
+SF:0\x20\x20\x20\x20}\n\n\x20\x20\x20\x20\x20\x20\x20\x20\.flag\x20{\n\x20
+SF:\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background-color:\x20#eaa98
+SF:1;\n\x20\x20\x20\x20\x20\x20\x20&#34;)%r(FourOhFourRequest,170,&#34;HTTP/1\.0\x
+SF:20404\x20NOT\x20FOUND\r\nConnection:\x20close\r\nContent-Length:\x20207
+SF:\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nDate:\x20Wed,\x2012
+SF:\x20Jun\x202024\x2006:39:12\x20GMT\r\nServer:\x20waitress\r\n\r\n&lt;!doct
+SF:ype\x20html&gt;\n&lt;html\x20lang=en&gt;\n&lt;title&gt;404\x20Not\x20Found&lt;/title&gt;\n&lt;h
+SF:1&gt;Not\x20Found&lt;/h1&gt;\n&lt;p&gt;The\x20requested\x20URL\x20was\x20not\x20found\
+SF:x20on\x20the\x20server\.\x20If\x20you\x20entered\x20the\x20URL\x20manua
+SF:lly\x20please\x20check\x20your\x20spelling\x20and\x20try\x20again\.&lt;/p&gt;
+SF:\n&#34;)%r(HTTPOptions,B9,&#34;HTTP/1\.0\x20200\x20OK\r\nAllow:\x20POST,\x20OPT
+SF:IONS,\x20GET,\x20HEAD\r\nConnection:\x20close\r\nContent-Length:\x200\r
+SF:\nContent-Type:\x20text/html;\x20charset=utf-8\r\nDate:\x20Wed,\x2012\x
+SF:20Jun\x202024\x2006:39:18\x20GMT\r\nServer:\x20waitress\r\n\r\n&#34;);
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port8084-TCP:V=7.95%I=7%D=6/12%Time=6669428F%P=x86_64-pc-linux-gnu%r(Ge
+SF:tRequest,130D,&#34;HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nConten
+SF:t-Length:\x204722\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nDa
+SF:te:\x20Wed,\x2012\x20Jun\x202024\x2006:39:11\x20GMT\r\nServer:\x20waitr
+SF:ess\r\n\r\n&lt;!DOCTYPE\x20html&gt;\n&lt;html\x20xmlns=\&#34;http://www\.w3\.org/199
+SF:9/xhtml\&#34;&gt;\n\t&lt;head&gt;\n\t\t&lt;meta\x20http-equiv=\&#34;Content-Type\&#34;\x20conte
+SF:nt=\&#34;text/html;\x20charset=utf-8\&#34;\x20/&gt;\n\t\t&lt;meta\x20name=\&#34;viewport\
+SF:&#34;\x20content=\&#34;width=device-width,\x20initial-scale=1,\x20maximum-scale
+SF:=1,\x20user-scalable=no\&#34;\x20/&gt;\n\t\t&lt;title&gt;The\x20Archive&lt;/title&gt;\n\t\
+SF:t\n\t\t&lt;link\x20rel=\&#34;preconnect\&#34;\x20href=\&#34;https://fonts\.googleapis\
+SF:.com\&#34;&gt;\n\t\t&lt;link\x20rel=\&#34;preconnect\&#34;\x20href=\&#34;https://fonts\.gstat
+SF:ic\.com\&#34;\x20crossorigin&gt;\n\t\t&lt;link\x20href=\&#34;https://fonts\.googleapi
+SF:s\.com/css2\?family=Noto\+Serif&amp;family=Playfair\+Display&amp;display=swap\&#34;
+SF:\x20rel=\&#34;stylesheet\&#34;&gt;\n\t\t\n\t\t&lt;script\x20src=\&#34;https://ajax\.googl
+SF:eapis\.com/ajax/libs/jquery/3\.5\.1/jquery\.min\.js\&#34;&gt;&lt;/script&gt;\n\t\t\n
+SF:\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;section\x20class=\&#34;wrapper\&#34;&gt;\n\t\t\t&lt;div\x20
+SF:class=\&#34;activity\x20parallax\&#34;&gt;\n\t\t\t\t&lt;div\x20class=\&#34;content\&#34;&gt;\n\t
+SF:\t\t\t\t&lt;d&#34;)%r(FourOhFourRequest,170,&#34;HTTP/1\.0\x20404\x20NOT\x20FOUND\
+SF:r\nConnection:\x20close\r\nContent-Length:\x20207\r\nContent-Type:\x20t
+SF:ext/html;\x20charset=utf-8\r\nDate:\x20Wed,\x2012\x20Jun\x202024\x2006:
+SF:39:12\x20GMT\r\nServer:\x20waitress\r\n\r\n&lt;!doctype\x20html&gt;\n&lt;html\x2
+SF:0lang=en&gt;\n&lt;title&gt;404\x20Not\x20Found&lt;/title&gt;\n&lt;h1&gt;Not\x20Found&lt;/h1&gt;\n&lt;
+SF:p&gt;The\x20requested\x20URL\x20was\x20not\x20found\x20on\x20the\x20server
+SF:\.\x20If\x20you\x20entered\x20the\x20URL\x20manually\x20please\x20check
+SF:\x20your\x20spelling\x20and\x20try\x20again\.&lt;/p&gt;\n&#34;);
+Service Info: Host: Welcome
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 250.64 seconds
+</code></pre>
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    <span class="about__logo" role="img">💾😶‍🌫️</span>&nbsp;
+    
+<h1 class="about__title">Sam Sandersona</h1>
+<p class="about__description">Freelance Security Researcher and IT Profesional</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/sandershark" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:sam@inert.me" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://www.linkedin.com/in/sam-sanderson/" rel="me" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+</div>
+                <hr>
+                <div class="aside__content">
+    
+    
+
+    
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p class="copyright">©2024 Sam Sanderson</p>
+<p class="advertisement">Powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/joeroe/risotto">risotto</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>
