@@ -1,13 +1,15 @@
-# About Me
+## About Me
 
-👨‍💼 IT Professional/DevOps Engineer | Freelance Security Researcher 🔒 | Perpetual Learner
+👨‍💻 **IT & Cloud Infrastructure Professional** | 🔐 **Security Researcher** | ☁️ **Identity & Cloud Security** | **Perpetual Learner**
 
-Experienced IT Professional specializing in various facets of technology with a keen eye for security. Adept at problem-solving and delivering top-tier customer service. Working on a CI/CD pipeline as a DevOps Engineer.
+I’m an IT professional focused on cloud infrastructure, identity, security, and automation. My professional experience spans Microsoft 365, Azure, Entra ID, endpoint management, enterprise application integrations, and security/compliance operations in large environments.
 
-AI/ML Interests are high, major advocate for general adoption within corporate environments with controlled data. Why aren’t there more private LLMs? Private Data Trained, means Private Data Finetuned LLMs, just saying. 
+I enjoy solving problems that sit at the intersection of infrastructure and security. Whether I’m troubleshooting an authentication issue, automating a security control, reviewing cloud configurations, or figuring out why something broke in production, I like understanding how systems work rather than simply treating the symptoms.
 
-Hacker, through bug bounty and public competitions. Huge puzzle fan.
+Outside of my professional work, I’m a security researcher and bug bounty hunter. I enjoy breaking things, finding vulnerabilities, participating in public competitions, and generally treating technology like a puzzle that needs to be solved.
 
-🛠️ Leveraging extensive professional experience to bolster expertise in cybersecurity. 🔍 Passionate about unraveling the complexities of security challenges in the IT landscape.
+I’m also particularly interested in AI/ML and its practical use in enterprise environments. I’m interested in private and controlled AI systems, particularly how organizations can take advantage of LLMs while maintaining ownership and control of their data.
 
-Check out my research in the posts section above.
+I’m constantly learning, experimenting, and building. This site is where I document some of that work, including security research, technical projects, and things I’ve learned along the way.
+
+Check out my research and projects in the posts section above.
