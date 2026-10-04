@@ -6,9 +6,16 @@
     <description>Recent content on Sand Shark Security</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <copyright>©2024 Sam Sanderson</copyright>
+    <copyright>©2026 Sam Sanderson</copyright>
     <lastBuildDate>Thu, 25 Apr 2024 09:51:53 -0400</lastBuildDate>
     <atom:link href="https://inert.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>October 3, 2026 - Passkeys Explained</title>
+      <link>https://inert.me/posts/passkeys_explained/</link>
+      <pubDate>Sunday, 3 Oct 2026 10:24:53 -0400</pubDate>
+      <guid>https://inert.me/posts/passkeys_explained/</guid>
+      <description>Understanding public key cryptography, phishing resistance, adversary-in-the-middle attacks, and what organizations should consider when moving beyond passwords.</description>
+    <item>
     <item>
       <title>April 25, 2024 - GPT Detection Tests</title>
       <link>https://inert.me/posts/gpt_vs_detection/</link>
