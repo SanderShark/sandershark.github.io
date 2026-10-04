@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Passkeys Explained: Why They're Fundamentally Different From Traditional MFA &ndash; Sand Shark Security</title>
+        <meta name="description" content="Understanding passkeys, public key cryptography, phishing resistance, adversary-in-the-middle attacks, and what organizations should consider when moving beyond traditional MFA.">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8"/>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9cQ2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <link rel="stylesheet" href="https://inert.me/css/palettes/base16-dark.css">
+        <link rel="stylesheet" href="https://inert.me/css/risotto.css">
+        <link rel="stylesheet" href="https://inert.me/css/custom.css">
+
+    </head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header">
+                <nav class="page__nav main-nav">
+                    <ul>
+                        <li class="nomarker">
+                            <h1 class="page__logo">
+                                <a href="https://inert.me/" class="page__logo-inner">Sand Shark Security</a>
+                            </h1>
+                        </li>
+
+                        <li class="main-nav__item">
+                            <a class="nav-main-item" href="https://inert.me/posts/" title="">Posts</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+
+            <section class="page__body">
+
+                <header class="content__header">
+                    <h1>Passkeys Explained: Why They're Fundamentally Different From Traditional MFA</h1>
+                </header>
+
+                <div class="content__body">
+
+                    <p>Passkeys have become a major topic in identity security, particularly as Microsoft and other major technology providers continue moving away from traditional authentication methods like SMS and email-based MFA.</p>
+
+                    <p>For organizations looking to improve their security posture, passkeys offer an attractive alternative. They provide strong phishing resistance, reduce reliance on passwords, and can be deployed without the operational overhead of a traditional enterprise PKI.</p>
+
+                    <p>However, there's a common misconception that passkeys are simply another form of multifactor authentication, offering little improvement over existing solutions like Microsoft Authenticator.</p>
+
+                    <p>To understand why this isn't the case, we need to look beyond the user experience and examine how authentication actually works.</p>
+
+                    <p>The distinction isn't just how many factors are involved. It's how trust is established, how credentials are protected, and whether an attacker can intercept and reuse the authentication process.</p>
+
+                    <h2>Understanding Traditional MFA</h2>
+
+                    <p>Traditional MFA generally works by requiring a user to provide an additional factor after entering their credentials.</p>
+
+                    <p>Depending on the implementation, this might involve:</p>
+
+                    <ul>
+                        <li>Receiving a one-time code through SMS or email.</li>
+                        <li>Entering a time-based one-time password (TOTP).</li>
+                        <li>Approving a push notification.</li>
+                        <li>Matching a number displayed during authentication.</li>
+                        <li>Using a hardware token to generate a temporary code.</li>
+                    </ul>
+
+                    <p>These methods provide meaningful security improvements over passwords alone. However, they share an important limitation: many rely on information or approval that can be relayed between a legitimate service and an attacker.</p>
+
+                    <p>Let's examine some of the most common implementations.</p>
+
+                    <h3>SMS and Email MFA</h3>
+
+                    <p>SMS and email-based authentication are among the weakest forms of MFA.</p>
+
+                    <p>SMS is susceptible to SIM swapping, interception, and social engineering. Email codes can be compromised through mailbox access, phishing, or attacks against the email account itself.</p>
+
+                    <p>The problem isn't that these methods provide no security. It's that the additional factor can often be obtained or manipulated by an attacker.</p>
+
+                    <h3>Hardware OTP Tokens</h3>
+
+                    <p>Hardware tokens, such as traditional RSA SecurID devices, provide a separate possession factor and remain useful in certain environments.</p>
+
+                    <p>However, OTP-based hardware tokens aren't inherently phishing-resistant.</p>
+
+                    <p>If an attacker captures a valid one-time code and relays it to the legitimate service before it expires, authentication may succeed.</p>
+
+                    <p>Their primary advantages are physical separation from the user's computer and the ability to operate independently of a mobile application. Their disadvantages include procurement costs, distribution, replacement, and lifecycle management.</p>
+
+                    <h3>Software-Based MFA</h3>
+
+                    <p>Applications like Microsoft Authenticator have significantly improved the usability and security of MFA.</p>
+
+                    <p>They support several authentication methods, including:</p>
+
+                    <ul>
+                        <li>TOTP codes.</li>
+                        <li>Push notifications.</li>
+                        <li>Number matching.</li>
+                        <li>Passwordless authentication.</li>
+                    </ul>
+
+                    <p>Number matching, in particular, helps mitigate MFA fatigue attacks by requiring users to match a challenge displayed during sign-in.</p>
+
+                    <p>However, these improvements don't eliminate all phishing risks.</p>
+
+                    <h2>The Adversary-in-the-Middle Problem</h2>
+
+                    <p>One of the most significant threats to traditional authentication is the adversary-in-the-middle (AiTM) attack.</p>
+
+                    <p>In a typical AiTM scenario, an attacker establishes a reverse proxy between a victim and a legitimate authentication service.</p>
+
+                    <p>The process looks something like this:</p>
+
+                    <ol>
+                        <li>The victim navigates to a convincing phishing page.</li>
+                        <li>The attacker proxies the victim's credentials to the legitimate service.</li>
+                        <li>The legitimate service issues an MFA challenge.</li>
+                        <li>The attacker relays that challenge to the victim.</li>
+                        <li>The victim completes authentication, believing they're interacting with the real service.</li>
+                        <li>The attacker captures the resulting authenticated session.</li>
+                    </ol>
+
+                    <p>The attacker doesn't necessarily need to defeat MFA. They simply relay the authentication process and steal the resulting session.</p>
+
+                    <p>This is particularly dangerous because the victim may have successfully completed every authentication step required by the legitimate service.</p>
+
+                    <p>TOTP codes are vulnerable to real-time interception, and push-based authentication can be abused through convincing social engineering or relay techniques.</p>
+
+                    <p>Number matching makes these attacks more difficult, but it doesn't establish cryptographic trust between the authenticator and the legitimate domain.</p>
+
+                    <p>This is where passkeys fundamentally change the equation.</p>
+
+                    <h2>How Passkeys Actually Work</h2>
+
+                    <p>Passkeys are based on public key cryptography, using standards developed through the FIDO Alliance and implemented through WebAuthn and related protocols.</p>
+
+                    <p>Instead of relying on a shared secret, such as a password or OTP, passkeys use a cryptographic key pair.</p>
+
+                    <p>When a user registers a passkey with a service:</p>
+
+                    <ol>
+                        <li>The authenticator generates a public and private key pair.</li>
+                        <li>The private key is securely stored by the authenticator.</li>
+                        <li>The public key is registered with the service.</li>
+                        <li>The service associates that public key with the user's account.</li>
+                    </ol>
+
+                    <p>During authentication, the service generates a cryptographic challenge.</p>
+
+                    <p>The authenticator signs that challenge using the private key, and the service verifies the signature using the registered public key.</p>
+
+                    <p>The private key is never sent to the service.</p>
+
+                    <p>This is already a significant improvement over password-based authentication, but the most important security property is something else entirely.</p>
+
+                    <h3>Origin Binding</h3>
+
+                    <p>Passkeys are cryptographically bound to the legitimate origin (domain) for which they were created.</p>
+
+                    <p>When a user attempts to authenticate, the browser and authenticator validate the origin against the credential's registered relying party.</p>
+
+                    <p>Consider an example:</p>
+
+                    <p>A user has registered a passkey for <code>login.microsoftonline.com</code>.</p>
+
+                    <p>An attacker creates a convincing phishing page that looks identical to the Microsoft sign-in experience but is hosted on a different domain.</p>
+
+                    <p>When the user attempts to authenticate, the authenticator recognizes that the origin doesn't match the registered credential.</p>
+
+                    <p>The passkey cannot simply be used on the attacker's domain.</p>
+
+                    <p>This is the critical difference between passkeys and traditional MFA.</p>
+
+                    <p>There is no OTP for the attacker to intercept, no push notification to relay, and no password to capture. The authentication process is tied to the legitimate service through cryptographic verification.</p>
+
+                    <p>Even a convincing phishing page cannot change that relationship.</p>
+
+                    <h2>Are All Passkeys the Same?</h2>
+
+                    <p>No. Understanding the distinction between device-bound and synced passkeys is important, particularly for organizations with strict security requirements.</p>
+
+                    <h3>Device-Bound Passkeys</h3>
+
+                    <p>Device-bound passkeys keep the private key tied to a specific authenticator or device.</p>
+
+                    <p>Depending on the platform, the key may be protected by hardware-backed security mechanisms such as:</p>
+
+                    <ul>
+                        <li>A Trusted Platform Module (TPM).</li>
+                        <li>Apple's Secure Enclave.</li>
+                        <li>Android's hardware-backed Keystore.</li>
+                        <li>A dedicated FIDO2 security key.</li>
+                    </ul>
+
+                    <p>These mechanisms help protect private keys from extraction and unauthorized use.</p>
+
+                    <p>Device-bound credentials are particularly attractive in managed enterprise environments because they provide stronger control over where credentials can exist.</p>
+
+                    <h3>Synced Passkeys</h3>
+
+                    <p>Synced passkeys allow credentials to be securely synchronized across devices through a passkey provider.</p>
+
+                    <p>This improves usability and reduces the risk of users losing access when replacing a device.</p>
+
+                    <p>Importantly, synced passkeys remain phishing-resistant. Synchronization does not eliminate the origin-binding properties of the underlying authentication protocol.</p>
+
+                    <p>However, synchronization introduces additional considerations around account recovery, provider security, and credential availability across devices.</p>
+
+                    <p>For organizations with stringent requirements, device-bound credentials may be preferable because they provide greater control over credential storage and portability.</p>
+
+                    <h2>Does a Passkey Satisfy Multifactor Authentication?</h2>
+
+                    <p>This is another area where the terminology can be confusing.</p>
+
+                    <p>A passkey can satisfy multifactor authentication through a combination of possession and local user verification.</p>
+
+                    <p>For example:</p>
+
+                    <ul>
+                        <li><strong>Something you have:</strong> The device or security key holding the private key.</li>
+                        <li><strong>Something you know:</strong> A PIN used to unlock the authenticator.</li>
+                        <li><strong>Something you are:</strong> A biometric verification, such as a fingerprint or facial recognition.</li>
+                    </ul>
+
+                    <p>The user doesn't necessarily need to complete separate authentication prompts for these factors.</p>
+
+                    <p>A single passkey authentication can provide strong multifactor security because the authenticator verifies the user's presence or identity before allowing the cryptographic operation.</p>
+
+                    <p>This is why passkeys can improve security while simultaneously reducing friction for users.</p>
+
+                    <p>One important caveat: a security key's possession alone is not equivalent to multifactor authentication. Where required, user verification must be enforced through an appropriate PIN or biometric mechanism.</p>
+
+                    <h2>What About Microsoft Entra ID?</h2>
+
+                    <p>For organizations using Microsoft Entra ID, passkeys can be integrated into an existing identity security strategy.</p>
+
+                    <p>Administrators can configure authentication methods, establish authentication strengths, and use Conditional Access to require appropriate authentication for sensitive applications and resources.</p>
+
+                    <p>A practical deployment might include:</p>
+
+                    <ol>
+                        <li>Enabling FIDO2 security keys or supported passkey methods.</li>
+                        <li>Establishing registration and recovery procedures.</li>
+                        <li>Requiring appropriate user verification.</li>
+                        <li>Configuring Conditional Access authentication strengths.</li>
+                        <li>Piloting deployment with a controlled group.</li>
+                        <li>Monitoring authentication activity and adoption.</li>
+                        <li>Expanding deployment based on user readiness and security requirements.</li>
+                    </ol>
+
+                    <p>Organizations should also consider the distinction between device-bound and synced credentials when defining their authentication policies.</p>
+
+                    <p>Passkeys aren't a replacement for a comprehensive identity security strategy. Device compliance, endpoint protection, session controls, privileged access management, and recovery processes remain essential.</p>
+
+                    <h2>Are Passkeys Completely Phishing-Proof?</h2>
+
+                    <p>No authentication method is entirely immune to compromise.</p>
+
+                    <p>Passkeys significantly reduce the risk of credential phishing and AiTM attacks, but they don't eliminate threats involving compromised endpoints, malicious software, account recovery weaknesses, or compromised identity providers.</p>
+
+                    <p>An attacker who controls a user's endpoint may be able to interact with an authenticator or steal an authenticated session through mechanisms that don't require defeating the passkey itself.</p>
+
+                    <p>Similarly, weak account recovery processes can undermine even the strongest primary authentication method.</p>
+
+                    <p>The objective isn't to find a single technology that solves every security problem. It's to eliminate entire classes of attacks wherever possible.</p>
+
+                    <p>Passkeys accomplish this exceptionally well for credential phishing.</p>
+
+                    <h2>The Case for Hardware-Backed Authentication</h2>
+
+                    <p>For organizations looking to move beyond traditional MFA, hardware-backed FIDO2 credentials are an excellent option.</p>
+
+                    <p>They offer:</p>
+
+                    <ul>
+                        <li>Strong phishing resistance through origin binding.</li>
+                        <li>Private key protection through secure hardware.</li>
+                        <li>Resistance to credential replay and OTP interception.</li>
+                        <li>Support for multifactor authentication through user verification.</li>
+                        <li>Reduced reliance on passwords and traditional PKI infrastructure.</li>
+                    </ul>
+
+                    <p>Solutions such as YubiKey provide a practical way to introduce these capabilities without building and maintaining an enterprise certificate infrastructure.</p>
+
+                    <p>They aren't the only option, and the right implementation depends on the organization's threat model, device ecosystem, and operational requirements.</p>
+
+                    <p>But for environments where authentication security is a priority, they're worth serious consideration.</p>
+
+                    <h2>Final Thoughts</h2>
+
+                    <p>The conversation around passkeys shouldn't focus solely on whether they're more convenient than traditional MFA.</p>
+
+                    <p>The real improvement is architectural.</p>
+
+                    <p>Traditional MFA often adds another step to an authentication process that can still be intercepted. Passkeys change the authentication process itself by establishing cryptographic trust between the authenticator and the legitimate service.</p>
+
+                    <p>That distinction is what makes them so valuable.</p>
+
+                    <p><strong>The future of authentication isn't about making users prove their identity more times. It's about making authentication fundamentally harder to compromise.</strong></p>
+
+                </div>
+
+                <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+
+                <div class="aside__about">
+                    <div class="aside__about">
+                        <span class="about__logo" role="img">💾😶‍🌫️</span>&nbsp;
+
+                        <h1 class="about__title">Sam Sanderson</h1>
+                        <p class="about__description">IT Professional and Freelance Security Researcher</p>
+                    </div>
+
+                    <ul class="aside__social-links">
+
+                        <li>
+                            <a href="https://github.com/sandershark" rel="me" aria-label="GitHub" title="GitHub">
+                                <i class="fa-brands fa-github" aria-hidden="true"></i>
+                            </a>&nbsp;
+                        </li>
+
+                        <li>
+                            <a href="mailto:sam@inert.me" rel="me" aria-label="Email" title="Email">
+                                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                            </a>&nbsp;
+                        </li>
+
+                        <li>
+                            <a href="https://www.linkedin.com/in/sam-sanderson/" rel="me" aria-label="LinkedIn" title="LinkedIn">
+                                <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                            </a>&nbsp;
+                        </li>
+
+                    </ul>
+                </div>
+
+                <hr>
+
+                <div class="aside__content">
+
+                    <p>
+                        2026-10-03
+                    </p>
+
+                </div>
+
+            </section>
+
+            <footer class="page__footer">
+                <p class="copyright">©2026 Sam Sanderson</p>
+                <p class="advertisement">Powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/joeroe/risotto">risotto</a>.</p>
+            </footer>
+
+        </div>
+    </body>
+
+</html>
